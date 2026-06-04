@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Cart</title>
+
+<style>
+body{
+    font-family:'Segoe UI', Arial;
+    background:linear-gradient(to right,#f5e6d3,#f8d7b3);
+    text-align:center;
+    margin:0;
+}
+
+h1{
+    margin-top:20px;
+    color:#8b2d14;
+}
+
+#cartPage{
+    max-width:600px;
+    margin:auto;
+}
+
+.item{
+    background:white;
+    margin:15px;
+    padding:15px;
+    border-radius:12px;
+    color:#333;
+    box-shadow:0 4px 12px rgba(0,0,0,0.15);
+}
+
+button{
+    margin:5px;
+    padding:8px 14px;
+    background:#8b2d14;
+    color:white;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:white;
+    color:#8b2d14;
+    border:1px solid #8b2d14;
+}
+
+h2{
+    color:#8b2d14;
+}
+
+#successBox{
+    display:none;
+    margin-top:80px;
+}
+
+.tick{
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    background:green;
+    color:white;
+    font-size:55px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin:auto;
+}
+</style>
+</head>
+
+<body>
+
+<!-- CART PAGE -->
+<div id="cartPage">
+
+    <h1>Your Cart 🛒</h1>
+
+    <div id="cartItems"></div>
+
+    <h2>Total ₹<span id="total">0</span></h2>
+
+    <!-- FIXED BUTTON -->
+    <button type="button" onclick="placeOrder()">
+        Confirm Order
+    </button>
+
+</div>
+
+<!-- SUCCESS PAGE -->
+<div id="successBox"></div>
+
+<script>
+
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+
+/* LOAD CART */
+function renderCart(){
+
+    let itemsDiv = document.getElementById("cartItems");
+    let total = 0;
+
+    itemsDiv.innerHTML = "";
+
+    if(cart.length === 0){
+        itemsDiv.innerHTML = "<h3>Your cart is empty 😔</h3>";
+        document.getElementById("total").innerText = 0;
+        return;
+    }
+
+    cart.forEach((item,i)=>{
+
+        let itemTotal = item.price * item.qty;
+        total += itemTotal;
+
+        itemsDiv.innerHTML += `
+        <div class="item">
+
+            <h3>${item.name}</h3>
+
+            <p>
+                ₹${item.price} × ${item.qty}
+                = <b>₹${itemTotal}</b>
+            </p>
+
+            <button onclick="increase(${i})">+</button>
+            <button onclick="decrease(${i})">-</button>
+
+        </div>`;
+    });
+
+    document.getElementById("total").innerText = total;
+}
+
+
+/* INCREASE */
+function increase(i){
+    cart[i].qty++;
+    saveCart();
+}
+
+/* DECREASE */
+function decrease(i){
+
+    if(cart[i].qty > 1){
+        cart[i].qty--;
+    }else{
+        cart.splice(i,1);
+    }
+
+    saveCart();
+}
+
+/* SAVE */
+function saveCart(){
+    localStorage.setItem("cart", JSON.stringify(cart));
+    renderCart();
+}
+
+
+// /* CONFIRM ORDER */
+// async function placeOrder(){
+
+//     if(cart.length === 0){
+//         alert("Cart is empty ❌");
+//         return;
+//     }
+
+//     try{
+
+//         const response = await fetch("http://localhost:9092/api/create-order",{
+//             method:"POST",
+//             headers:{
+//                 "Content-Type":"application/json"
+//             },
+//             body:JSON.stringify(cart)
+//         });
+
+//         if(!response.ok){
+//             throw new Error("Server error");
+//         }
+
+//         const data = await response.json();
+
+//         showBill(data);
+
+//         localStorage.removeItem("cart");
+
+//     }catch(error){
+
+//         alert("Backend not connected ❌");
+//         console.log(error);
+//     }
+// }
+
+
+
+
+async function placeOrder(){
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    if(cart.length === 0){
+        alert("Cart empty ❌");
+        return;
+    }
+
+    let requestData = {
+        message: "Order Confirmed ✅",
+        total: cart.reduce((sum,item)=>sum + item.price * item.qty, 0),
+
+        items: cart.map(item => ({
+            name: item.name,
+            price: item.price,
+            qty: item.qty
+        }))
+    };
+
+    try{
+
+        const response = await fetch("http://localhost:9091/api/order",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify(requestData)
+        });
+
+        const result = await response.text();
+
+        console.log(result);
+
+        // ✅ Show output on screen
+        showBill(requestData);
+
+        localStorage.removeItem("cart");
+
+    }catch(error){
+        alert("Backend Error ❌");
+        console.log(error);
+    }
+}
+
+
+
+
+/* SHOW BILL */
+function showBill(data){
+
+    let html = `
+        <div class="tick">✔</div>
+        <h2>${data.message}</h2>
+    `;
+
+    data.items.forEach(item=>{
+
+        html += `
+        <p>
+            ${item.name}
+            - ₹${item.price} × ${item.qty}
+            = ₹${item.price * item.qty}
+        </p>`;
+    });
+
+    html += `<h2>Total: ₹${data.total}</h2>`;
+
+    document.getElementById("cartPage").style.display = "none";
+
+    document.getElementById("successBox").style.display = "block";
+
+    document.getElementById("successBox").innerHTML = html;
+}
+
+
+/* PAGE LOAD */
+renderCart();
+
+</script>
+
+</body>
+</html>

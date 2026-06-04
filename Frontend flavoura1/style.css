@@ -1,0 +1,246 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f5e6d3;
+    scroll-behavior: smooth;
+}
+
+/* NavBar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #8b2d14;
+    padding: 15px 40px;
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: white;
+    transition: 0.3s;
+}
+
+.cart-btn {
+    background: white;
+    color: #8b2d14;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+/* Hero Section */
+.hero {
+    height: 90vh;
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('./main1.jpeg') no-repeat center center/cover;
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+.overlay {
+    padding: 0 40px;
+}
+
+.overlay h1 { font-size: 48px; }
+.overlay p { max-width: 500px; margin: 20px 0; }
+.overlay button {
+    background: #8b2d14;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+/* Special Section - Fixed Text Visibility */
+#special {
+    background: #8b2d14;
+    padding: 60px 40px;
+    text-align: center;
+}
+
+.special-title { color: white; font-size: 32px; margin-bottom: 10px; }
+.special-subtitle { color: #f5e6d3; margin-bottom: 30px; }
+
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.card {
+    background: white;
+    width: 230px;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    transition: 0.3s;
+}
+
+.card h3 { color: #8b2d14; margin-top: 10px; }
+.card img { width: 100%; height: 160px; object-fit: cover; border-radius: 8px; }
+
+/* Menu & Search */
+#menuSection { padding: 60px 40px; text-align: center; }
+
+#menuSearch {
+    padding: 12px 20px;
+    width: 100%;
+    max-width: 400px;
+    border-radius: 25px;
+    border: 2px solid #8b2d14;
+    margin: 20px auto;
+    display: block;
+    outline: none;
+}
+
+.filters { margin-bottom: 30px; }
+.filters button {
+    margin: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    background: #8b2d14;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.menu-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    justify-content: center;
+}
+
+.menu-card {
+    width: 250px;
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.menu-card img { width: 100%; height: 170px; object-fit: cover; border-radius: 8px; }
+
+.btn {
+    background: #8b2d14;
+    color: white;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+/* Animations & Toast */
+.btn.added-animation {
+    background-color: #27ae60 !important;
+    transform: scale(1.05);
+}
+
+#toast {
+    visibility: hidden;
+    min-width: 250px;
+    background: #333;
+    color: white;
+    text-align: center;
+    border-radius: 8px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1001;
+    left: 50%;
+    bottom: 30px;
+    transform: translateX(-50%);
+}
+
+
+.add-btn {
+    background:#8b2d14;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.add-btn:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
+
+
+#toast.show {
+    visibility: visible;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+
+#menuSection h1 {
+    font-size: 36px;
+    color: #8b2d14;
+    text-align: center;
+    margin-bottom: 10px;
+    font-family: 'Segoe UI', sans-serif;
+}
+.addcart {
+    background-color: #8b2d14;
+    color: white;
+   padding: 10px 10px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.3em;
+}
+
+.addcart:hover {
+    background-color: white;
+    color: #8b2d14;
+    border: 1px solid #8b2d14;
+}
+
+.menu-item:hover .add-btn {
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+}
+
+@keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+@keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+
+.qty { display: flex; justify-content: center; align-items: center; gap: 15px; margin: 10px 0; }
+.qty button { width: 30px; height: 30px; border-radius: 50%; border: 1px solid #8b2d14; background:#8b2d14; color: white; cursor: pointer; font-size: 20px; }
+.qty :hover{background-color: white; color: #8b2d14; border-radius: 1px solid #8b2d14;}

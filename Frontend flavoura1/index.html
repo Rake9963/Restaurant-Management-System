@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Flavora</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+ 
+<!-- NavBar -->
+<nav class="navbar">
+<div class="logo">
+        <i class="fas fa-utensils"></i> Flavora
+    </div>
+    <ul class="nav-links">
+        <li><a href="#special"><i class="fas fa-star"></i> Today's Specials</a></li>
+        <li><a href="#menuSection"><i class="fas fa-book-open"></i> Menu</a></li>
+        <li>
+            <button class="cart-btn" onclick="goToCart()">
+                 <i class="fas fa-shopping-cart"></i> Cart
+(<span id="count">0</span>)
+            </button>
+        </li>
+    </ul>
+</nav>
+
+<!-- Main Section -->
+<section class="hero">
+    <div class="overlay">
+         <h1>Where Flavor <br> Meets Tradition</h1>
+        <p>
+           A celebration of flavors—rich biryanis, delicious starters, cheesy pizzas, refreshing mocktails, and indulgent desserts, all crafted to make every bite memorable.
+        </p>
+        <button onclick="scrollMenu()">Explore Menu</button>
+    </div>
+</section>
+
+<!-- Special Section -->
+<section id="special">
+    <h2 style="color:white;"><i class="fas fa-star"></i> Today's Specials</a></li></h2><br>
+    <p style="color: white;">Crafted with passion, served with perfection.</p><br>
+
+    <div class="cards">
+        <div class="card">
+            <img src="./sp1.jpeg">
+            <h3>Crispy Chilli Chicken</h3>
+        </div>
+
+        <div class="card">
+            <img src="./sp2.jpeg">
+            <h3>Nalli Ghost Biryani</h3>
+        </div>
+
+        <div class="card">
+            <img src="./sp3.jpeg">
+            <h3>Mango Masti</h3>
+        </div>
+
+        <div class="card">
+            <img src="./spc4.jpeg">
+            <h3>Tequila Sunrise</h3>
+        </div>    </div>
+</section>
+
+<!-- Menu Section -->
+<section id="menuSection">
+        <h1>Our Menu</h1><br>
+  <p>From timeless classics to modern delights, discover what we serve.</p><br>
+
+    <div class="filters">
+        <button onclick="filterItems('all')">All</button>
+        <button onclick="filterItems('biryani')">Biryani</button>
+        <button onclick="filterItems('starters')">Starters</button>
+        <button onclick="filterItems('desserts')">Desserts</button>
+        <button onclick="filterItems('mocktails')">Mocktails</button>
+    </div>
+
+    <div class="menu-container" id="menu"></div>
+</section>
+
+<script src="script.js"></script>
+<!-- 
+<button onclick="createOrder()">Place Order</button> -->
+
+<button onclick="placeOrder()">Confirm Order</button>
+
+
+
+
+</body>
+</html>
